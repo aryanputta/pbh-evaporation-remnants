@@ -1,5 +1,6 @@
 import numpy as np
 
+from benchmark_evaporation import run_benchmark
 from evaporation_model import abundance_history, lifetime_seconds, mass_at_time
 
 
@@ -18,3 +19,7 @@ def test_remnant_survives():
     history = abundance_history(1e10, 1.0, remnant_mass_g=1e5)
     assert history["mass_g"][-1] >= 1e5
 
+
+def test_benchmark_matches_analytic_solution():
+    data = run_benchmark(1e10)
+    assert data["abs_error_g"].max() < 1e-6
